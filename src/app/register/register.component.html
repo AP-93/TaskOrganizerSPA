@@ -1,0 +1,6 @@
+<h1>Create Account</h1>
+<form #loginForm="ngForm" class="login-form" (ngSubmit)="register()">
+    <input type="text" placeholder="Username" name="username" required [(ngModel)]="model.username">
+    <input type="password" placeholder="Password" name="password" required [(ngModel)]="model.password">
+    <button [disabled]="!loginForm.valid" type="submit">Create New Account</button>
+</form>

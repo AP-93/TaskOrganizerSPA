@@ -1,0 +1,28 @@
+<div class="cardContainer">
+    <div class="cardHeader">
+        <div>{{cardData.cardText}}</div>
+        <div>in List {{listName}}</div>
+    </div>
+    <div class="detailsContainer">
+        <div class="descAndActContainer">
+            <div class="description" (clickOutside)="openForm = false">
+                <div>Description</div>
+                <div *ngIf="cardData.description" (click)="openForm = !openForm" [hidden]="openForm">
+                    {{cardData.description}}aaa</div>
+
+                <div class="cardDescription" *ngIf="!cardData.description" (click)="openForm = !openForm"
+                    [hidden]="openForm">Add a more detailed description...</div>
+
+                <form #boardListForm="ngForm" class="cardDescription" (ngSubmit)="createList()" [hidden]="!openForm">
+                    <input type="text" placeholder="Add a more detailed description..." name="cardDescription"
+                        [(ngModel)]="cardData.description" id="cardDescInput">
+                    <button [disabled]="!boardListForm.valid" type="submit">Save</button>
+                </form>
+            </div>
+            <div class="activity">
+                <div>Activity</div>
+            </div>
+        </div>
+        <div class="options"></div>
+    </div>
+</div>

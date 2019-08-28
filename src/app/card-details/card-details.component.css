@@ -1,0 +1,45 @@
+.cardContainer{
+    padding: 10px 1vw;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    width: 60vw;
+    height: 80vh;
+}
+.cardHeader{
+    padding: 2vh 2vw;
+    background-color:rgb(0, 26, 255);
+}
+.detailsContainer{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+background-color:rgb(255, 166, 0);
+}
+.descAndActContainer{
+    display: grid;
+    grid-template-rows: auto 1fr;
+    background-color:rgb(211, 61, 61);
+}
+.description{
+    padding: 2vh 2vw;
+    background-color:rgb(189, 99, 99);
+}
+.cardDescription{
+    background-color: azure;
+    padding: 1vh 1vw;
+    margin-top: 1vh;
+    border-radius: 5px;
+    cursor: default;
+}
+#cardDescInput{
+    min-height: fit-content;
+    height: 5vh;
+    width: 100%;
+}
+.activity{
+    padding: 2vh 2vw;
+    background-color:rgb(94, 65, 12);
+}
+.options{
+    background-color:rgb(0, 255, 64);
+}
+

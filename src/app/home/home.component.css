@@ -1,0 +1,28 @@
+#homePgaeWrapper{
+    display: grid;
+}
+.container{
+    text-align: center;
+    margin-top: 16vh;
+}
+.login-form{
+    display: grid;
+    width: 40vw;
+    row-gap: 1vh;
+    margin:auto;
+}
+input{
+    height:5vh;
+}
+button{
+    width: fit-content;
+    margin-left: 1vw;
+}
+#buttonContainer{
+    display: grid;
+    grid-auto-columns: auto;
+    background-color: rgb(192, 62, 62);
+    height: 6vh;
+    align-content: center;
+    padding: 1vh 2vw;
+}

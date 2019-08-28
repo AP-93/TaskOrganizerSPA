@@ -1,0 +1,10 @@
+<nav class="nav-bar">
+    <h1>Trello</h1>
+    <div *ngIf="loggedIn()" id="logoutDiv"><a (click)="logOut()">Logout</a></div>
+    <form *ngIf="!loggedIn()" #loginForm="ngForm" class="login-form" (ngSubmit)="login()">
+        <input type="text" placeholder="Username" name="username" required [(ngModel)]="model.username">
+        <input type="password" placeholder="Password" name="password" required [(ngModel)]="model.password">
+        <button [disabled]="!loginForm.valid" type="submit">Log In</button>
+    </form>
+
+</nav>

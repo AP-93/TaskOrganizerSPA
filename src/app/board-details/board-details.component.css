@@ -1,0 +1,128 @@
+#wrapper{
+    display: grid;
+    padding: 2vh 6vw;
+    overflow: auto;
+    background-color: rgb(196, 255, 235);
+}
+#listName{
+    font-size: 24px;
+    color: rgb(99, 107, 114);
+    padding: 12px 8px;
+}
+#card{
+    background-color: rgb(248, 248, 248);
+    margin: 4px 8px;
+    padding: 10px 5px;
+    box-shadow: 0 1px  #a5a4a4;
+    border-radius: 5px;
+}
+#cardsContainer{
+    overflow-y: auto;
+}
+#addCardContainer{
+     padding: 10px 8px;
+}
+#addCardBtn{
+    color: rgb(127, 131, 134);    
+}
+#addCardBtn:hover{   
+    color: rgb(102, 105, 107);
+    cursor: default;
+    text-decoration: underline;
+}
+#boardListContainer{
+    padding: 0 4px;
+    display: grid;
+    height: 88vh;
+    grid-template-columns: repeat(999, 1fr);
+    margin-right: 4px;
+    margin-bottom: 0;
+    overflow-x: auto;
+    overflow-y: hidden;  
+}
+.list{
+    display: grid;
+    grid-auto-rows: min-content 1fr;
+    margin: 0 4px;
+    word-break: break-all;
+    height:min-content;
+    max-height: 85vh;
+    width: 272px;
+    min-width: fit-content;
+    border-radius: 5px;
+    background-color: #dfe1e6;
+    box-shadow: 0 1px 1px #a5a4a4;
+}
+.newCardForm{
+    display: block;
+    padding: 10px;
+    margin-bottom: 4px;
+    width: 92%;
+    border-radius: 2%;
+    outline: 0;
+    border:0;
+}
+#addAnotherList{
+    background-color: #75757528;
+    cursor:default;
+}
+.addListBtn{
+    padding: 10px 8px;
+}.addListBtn:hover{
+    background-color: #7575754b;
+    border-radius: 5px;
+}.addListBtn:active{
+    background-color: #75757591;
+    border-radius: 5px;
+}
+.addListForm{
+    padding: 10px 8px;
+}
+.lstNameAndBtn{
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+.lstOptionBtn{
+    background-color: rgba(228, 228, 228, 0.192);
+    border-radius: 5px;
+    padding: 1vh 1vh;
+    margin: 8px;
+    border:0;
+    outline: 0;
+}
+.lstOptionBtn:hover{
+    background-color: rgba(99, 99, 99, 0.144);
+}
+.lstOptionBtn:active{
+    background-color: rgba(99, 99, 99, 0.356);
+}
+#lstActionDialog{
+    word-break: normal;
+    white-space: pre;
+}
+.lstActionText{
+    padding: 0 3vw;
+}
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 999;
+  }
+.cardDataCOntainer{
+   display: flex;
+    z-index: 5;
+    margin: 0 20vw;
+}
+.dialogClickableOption{
+    padding: 1vh 1vw;
+    border-radius: 5px;
+    cursor: default;
+}.dialogClickableOption:hover{
+    background-color: #a5a4a462;
+}.dialogClickableOption:active{
+    background-color: #a5a4a481;
+}

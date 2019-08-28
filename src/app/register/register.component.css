@@ -1,0 +1,17 @@
+.login-form{
+    
+    display: grid;
+    width: 40vw;
+    row-gap: 1vh;
+    margin:auto;
+}
+input{
+    height:5vh;
+}
+button{
+    height:5vh;
+}
+h1{
+    padding-top: 8vh;
+    text-align: center;
+}

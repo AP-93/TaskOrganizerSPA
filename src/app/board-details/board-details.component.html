@@ -1,0 +1,53 @@
+<app-board-details-bar *ngIf="boardData" [userIsOwner]="userIsOwner" [boardId]="boardData.id"
+    [boardOwnerId]="boardData.ownerId" [boardTitle]="boardData.title"></app-board-details-bar>
+
+<div id="boardListContainer" *ngIf="boardData">
+    <div *ngFor='let l of boardData.boardLists ;let i = index'>
+        <div class="list">
+            <div class="lstNameAndBtn">
+                <div id="listName">{{l.listName}}</div>
+                <div class="btnDialogContainer">
+                    <button class="lstOptionBtn" (click)="clickedList = i+1">&bull;&bull;&bull;</button>
+                    <app-dialog [(visible)]="clickedList" *ngIf="clickedList===i+1" id="lstActionDialog">
+                        <div class="lstActionText">List Actions</div>
+                        <hr>
+                        <div class="dialogClickableOption" (click)="toggleForm(i); clickedList=false">Add Card...</div>
+                        <div class="dialogClickableOption"
+                            (click)="deleteAllCards(boardData.id,l.id);clickedList=false">Delete All Cards in This
+                            List...</div>
+                        <div class="dialogClickableOption" (click)="deleteList(boardData.id,l.id);clickedList=false">
+                            Delete This List...</div>
+                    </app-dialog>
+                </div>
+            </div>
+            <div id="cardsContainer">
+                <div *ngFor='let c of l.cards' id="card" (click)="openCardDetails(c,l.listName)">
+                    {{c.cardText}}
+                </div>
+            </div>
+            <div id="addCardContainer">
+                <a (click)="toggleForm(i)" *ngIf="showAddacardText || i!= formId" id="addCardBtn"><span>+</span>Add
+                    card</a>
+                <form #newCardForm="ngForm" (ngSubmit)="createCard(l.id)" [hidden]="i != formId">
+                    <input class="newCardForm" type="text" placeholder="Card name" name="CardName" required autofocus
+                        [(ngModel)]="newCard.cardName">
+                    <button [disabled]="!newCardForm.valid" type="submit">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="list" id="addAnotherList" (clickOutside)="addListInput=false">
+        <a (click)="addListInput = !addListInput" [hidden]="addListInput" class="addListBtn"><span>+</span>Add list</a>
+        <form [hidden]="!addListInput" #boardListForm="ngForm" class="addListForm" (ngSubmit)="createList()">
+            <input type="text" placeholder="List name" name="boardListName" required [(ngModel)]="newList.ListName">
+            <button [disabled]="!boardListForm.valid" type="submit">Add</button>
+        </form>
+    </div>
+
+</div>
+<div class="cardDataCOntainer" *ngIf="showCardDetails">
+    <app-dialog [(visible)]="showCardDetails">
+        <app-card-details [cardData]="cardData" [listName]="listName"></app-card-details>
+    </app-dialog>
+</div>

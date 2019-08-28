@@ -1,0 +1,44 @@
+<div class="boardBar">
+    <h1>{{boardTitle}}</h1>
+    <div class="boardMembersContainer btnDialogContainer" *ngIf="boardUsers">
+
+        <div class="boardMember" *ngFor='let u of boardUsers | slice:0:3 ;let i = index ;let firstItem = first'
+            [ngClass]="{ firstMember: firstItem }" (click)="clicekId = i+1; id=i">{{u.username.charAt(0).toUpperCase()}}
+            <span id="hoverUserMsg">{{u.username}}</span>
+        </div>
+        <div class="boardMember" (click)="otherUsers = !otherUsers" *ngIf="boardUsers.length > 3">
+            +{{(boardUsers.length)-3}}</div>
+        <app-dialog [(visible)]="clicekId" id="clickOnUserDialog">
+            <div id="iconAndNameContainer">
+                <div class="boardMember">{{boardUsers[id]?.username.charAt(0).toUpperCase()}}</div>
+                <div class="dialogHeader">{{boardUsers[id]?.username}} </div>
+            </div>
+            <div class="dialogClickableOption">View Activity</div>
+            <div class="dialogClickableOption" *ngIf="boardUsers[id]?.id != boardOwnerId && userIsOwner"
+                (click)="removeUserFromBoard(boardUsers[id].id); clicekId=null">Remove User</div>
+        </app-dialog>
+        <app-dialog [(visible)]="otherUsers">
+            <div class="dialogHeader">Board Members</div>
+            <hr>
+            <div class="allUsersInDialog">
+                <div *ngFor='let usr of boardUsers;let ind = index' class="boardMember"
+                    (click)="clicekId=ind+1;otherUsers=!otherUsers;id=ind ">{{usr.username.charAt(0).toUpperCase()}}
+                    <span id="hoverUserMsg">{{usr.username}}</span>
+                </div>
+            </div>
+        </app-dialog>
+    </div>
+
+    <div class="btnDialogContainer">
+        <button (click)="showDialog = !showDialog" class="inviteUsrBtn">Invite</button>
+        <app-dialog [(visible)]="showDialog">
+            <div>Invite User</div>
+            <form #inviteUserForm="ngForm" (ngSubmit)="addUserToBoard()">
+                <input name="userToAddInput" type="text" placeholder="enter username" required
+                    [(ngModel)]="userToAdd.Username">
+                <button [disabled]="inviteUserForm.invalid" type="submit">Send Invitation</button>
+            </form>
+        </app-dialog>
+    </div>
+
+</div>

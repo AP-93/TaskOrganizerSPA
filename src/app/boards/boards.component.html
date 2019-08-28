@@ -1,0 +1,19 @@
+<div id="wrapper" *ngIf="boards">
+    <h1>Boards</h1>
+    <div id="boardContainer">
+        <div *ngFor='let b of boards'>
+            <div class="board" [routerLink]="['/boards',b.id]">{{b.title}}</div>
+        </div>
+
+        <div id="createBoard" class="board"><a (click)="inputHidden = !inputHidden"
+                [hidden]="!inputHidden"><span>+</span>Add Board</a>
+            <form [hidden]="inputHidden" #boardForm="ngForm" class="board-name-form"
+                (ngSubmit)="createBoard(boardForm)">
+                <input type="text" placeholder="Board name" name="boardName" required
+                    [(ngModel)]="newBoardData.boardName">
+                <button [disabled]="!boardForm.valid" type="submit">Create</button>
+            </form>
+        </div>
+    </div>
+
+</div>
