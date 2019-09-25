@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Card } from '../_models/boardData';
+import { BoardDataService } from '../_services/board-data.service';
 
 @Component({
   selector: 'app-card-details',
@@ -10,14 +11,19 @@ export class CardDetailsComponent implements OnInit {
 
   @Input() cardData: Card;
   @Input() listName: string;
-
+  @Input() boardId: number;
+  @Output() close = new EventEmitter();
   showCardDescInput: boolean;
 
-  constructor() { }
+  constructor(private boardService: BoardDataService) { }
 
   ngOnInit() {
-    console.log("ovojeuvcomponenti", this.cardData)
-    this.cardData.description = "desc"
   }
 
+  SaveCardData() {
+    this.boardService.changeCard(this.cardData, this.boardId).subscribe(() => console.log(this.cardData));
+  }
+  DeleteCard() {
+    this.boardService.deleteCard(this.cardData, this.boardId).subscribe(() => this.close.emit(null));
+  }
 }

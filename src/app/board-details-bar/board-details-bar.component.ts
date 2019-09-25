@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BoardDataService } from '../_services/board-data.service';
-import { userForAdd } from '../_models/userForAdd';
+import { UserForAdd } from '../_models/userForAdd';
 
 @Component({
   selector: 'app-board-details-bar',
@@ -17,7 +17,7 @@ export class BoardDetailsBarComponent implements OnInit {
   @Input() boardOwnerId: number;
   @Input() boardTitle: string;
 
-  userToAdd: userForAdd = { Username: "" };
+  userToAdd: UserForAdd = { Username: "" };
   boardUsers: any;
 
   ngOnInit() {
@@ -28,11 +28,9 @@ export class BoardDetailsBarComponent implements OnInit {
     this.boardService.getBoardUsers(this.boardId).subscribe(x => this.boardUsers = x);
   }
   addUserToBoard() {
-    //TODO check if user is on list, display addes user, send message user added succes or fail
     this.boardService.addUserToBoard(this.userToAdd, this.boardId).subscribe(() => this.getUsers());
   }
   removeUserFromBoard(userId: number) {
     this.boardService.removeUserFromBoard(this.boardId, userId).subscribe(() => this.getUsers());
   }
-
 }

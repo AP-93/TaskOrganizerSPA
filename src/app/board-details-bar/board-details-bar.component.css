@@ -7,7 +7,7 @@ h1{
     margin:0;
 }
 .btnDialogContainer{
-   position: relative; /*absolute dialog positions itself relative to first non static ancestor*/
+   position: relative;
     align-self: center;
 }
 .boardMembersContainer{
@@ -22,11 +22,11 @@ h1{
     justify-content: center;
     margin:0 1px;
     border:2px solid #bec1c491;
- padding:2px;
- height: 20px;
- width: 20px;
- border-radius: 50%;
- background-color: #dfe1e6;
+    padding:2px;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: #dfe1e6;
 }.boardMember:hover {
  background-color: #aaacaf83;
 }.boardMember:active{
@@ -50,7 +50,7 @@ h1{
 #iconAndNameContainer{
     display: grid;
     grid-template-columns: 1fr 1fr ;
-   grid-column-gap: 1vw;
+    grid-column-gap: 1vw;
     margin-bottom: 1vh;
 }
 .firstMember{

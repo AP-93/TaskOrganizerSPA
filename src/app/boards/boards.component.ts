@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BoardDataService } from '../_services/board-data.service';
-import { newBoard } from '../_models/newBoard';
+import { NewBoard } from '../_models/newBoard';
 import { NgForm } from '@angular/forms';
+import { Board } from '../_models/boardData';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-boards',
@@ -10,12 +12,12 @@ import { NgForm } from '@angular/forms';
 })
 export class BoardsComponent implements OnInit {
 
-  newBoardData: newBoard = {
+  newBoardData: NewBoard = {
     userId: 0,
     boardName: ""
   };
 
-  boards: any;
+  boards: Board[];
   inputHidden: boolean = true;
 
   constructor(private boardService: BoardDataService) { }
@@ -24,7 +26,6 @@ export class BoardsComponent implements OnInit {
     this.displayBoards();
   }
   createBoard(form: NgForm) {
-    console.log(this.newBoardData);
     this.boardService.createBoard(this.newBoardData).subscribe(() => { this.displayBoards(); form.reset(); this.inputHidden = true; });
   }
   toggleInput() {
@@ -32,8 +33,12 @@ export class BoardsComponent implements OnInit {
   }
   displayBoards() {
     this.boardService.getBoards().subscribe(x => {
-    this.boards = x;
-      console.log(this.boards)
+      this.boards = x;
+      this.boardService.boardData = x;
     });
+  }
+  drop(event: CdkDragDrop<Board[]>) {
+    moveItemInArray(this.boards, event.previousIndex, event.currentIndex);
+    //console.log(this.boards, event.previousIndex, event.currentIndex)
   }
 }

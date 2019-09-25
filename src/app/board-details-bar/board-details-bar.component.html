@@ -1,5 +1,7 @@
 <div class="boardBar">
-    <h1>{{boardTitle}}</h1>
+    <div>
+        <h1>{{boardTitle}}</h1>
+    </div>
     <div class="boardMembersContainer btnDialogContainer" *ngIf="boardUsers">
 
         <div class="boardMember" *ngFor='let u of boardUsers | slice:0:3 ;let i = index ;let firstItem = first'
@@ -40,5 +42,4 @@
             </form>
         </app-dialog>
     </div>
-
 </div>

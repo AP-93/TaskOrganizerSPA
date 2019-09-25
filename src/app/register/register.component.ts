@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   model: any = {};
+  registerErrorMsg: string;
 
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -19,12 +20,12 @@ export class RegisterComponent implements OnInit {
   register() {
     this.authService.register(this.model).subscribe(() => {
       this.authService.login(this.model).subscribe(next => {
-        console.log("gg logirase");
         this.router.navigate(["/boards"]);
-      }, error => {
-        console.log("login fail")
-      })
-    }, error => console.log(error)
-    );
+        this.authService.errorMsg = null;
+      });
+    }, error => {
+      this.registerErrorMsg = error.error;
+      console.log(error);
+    });
   }
 }

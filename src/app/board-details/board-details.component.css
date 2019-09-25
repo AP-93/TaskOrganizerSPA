@@ -15,6 +15,20 @@
     padding: 10px 5px;
     box-shadow: 0 1px  #a5a4a4;
     border-radius: 5px;
+    position: relative;
+}
+.cardBtn {
+    background-color: #dfe1e600;
+    position: absolute;
+    top: 0;
+    border: 5px;
+    bottom: 0;
+    right: 0;
+    visibility: hidden;
+    z-index: 5;
+}
+#card:hover .hide{
+   visibility: visible;
 }
 #cardsContainer{
     overflow-y: auto;
@@ -37,10 +51,10 @@
     grid-template-columns: repeat(999, 1fr);
     margin-right: 4px;
     margin-bottom: 0;
-    overflow-x: auto;
+    overflow-x: visible;
     overflow-y: hidden;  
 }
-.list{
+.list {
     display: grid;
     grid-auto-rows: min-content 1fr;
     margin: 0 4px;
@@ -51,7 +65,7 @@
     min-width: fit-content;
     border-radius: 5px;
     background-color: #dfe1e6;
-    box-shadow: 0 1px 1px #a5a4a4;
+    box-shadow: 0 1px 1px #a5a4a4;  
 }
 .newCardForm{
     display: block;
@@ -97,6 +111,7 @@
     background-color: rgba(99, 99, 99, 0.356);
 }
 #lstActionDialog{
+    position: relative;
     word-break: normal;
     white-space: pre;
 }
@@ -112,10 +127,12 @@
     background-color: rgba(0, 0, 0, 0);
     z-index: 999;
   }
-.cardDataCOntainer{
-   display: flex;
-    z-index: 5;
-    margin: 0 20vw;
+.cardDataContainer{
+   position: absolute;
+    z-index: 999;
+    height: 60vh;
+    width:80vw;
+    margin:0 20vw;
 }
 .dialogClickableOption{
     padding: 1vh 1vw;
@@ -125,4 +142,76 @@
     background-color: #a5a4a462;
 }.dialogClickableOption:active{
     background-color: #a5a4a481;
+}
+
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    position: absolute;
+    background-color: #f1f1f1;
+    width: 15vw;
+    min-width: fit-content;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  /* Links inside the dropdown */
+  .dropdown-content {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  .dropdownItem{
+    padding: 2px 2px;
+    margin: 2px 1vw;
+    cursor: default;
+}.dropdownItem:hover{
+    background-color: #a5a4a462;
+}.dropdownItem:active{
+    background-color: #a5a4a481;
+}
+.moveLstOptions{
+    margin-bottom: 2px;
+    background-color: #a5a4a436;
+}
+
+/* Animate items as they're being sorted. */
+.drag-placeholder{
+    font-size: 24px;
+    color: rgb(99, 107, 114);
+    margin: 0 4px;
+    word-break: break-all;
+    height:10vh;
+    max-height: 85vh;
+    text-align: center;
+    padding-top:3vh; 
+    width: 272px;
+    min-width: fit-content;
+    border-radius: 5px;
+    background-color: #dfe1e6;
+}
+.drop-placeholder {
+    background: rgba(204, 204, 204, 0.479);
+    border-radius: 5px;
+    height:10vh;
+    max-height: 85vh;
+    width: 272px;
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);  
+}
+.cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+                0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                0 3px 14px 2px rgba(0, 0, 0, 0.12);   
+}
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+.cdk-drop-list-dragging  {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

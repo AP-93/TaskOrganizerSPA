@@ -1,10 +1,18 @@
 <nav class="nav-bar">
     <h1>Trello</h1>
     <div *ngIf="loggedIn()" id="logoutDiv"><a (click)="logOut()">Logout</a></div>
-    <form *ngIf="!loggedIn()" #loginForm="ngForm" class="login-form" (ngSubmit)="login()">
-        <input type="text" placeholder="Username" name="username" required [(ngModel)]="model.username">
-        <input type="password" placeholder="Password" name="password" required [(ngModel)]="model.password">
-        <button [disabled]="!loginForm.valid" type="submit">Log In</button>
-    </form>
 
+    <div *ngIf="!loggedIn()" class="formContainer">
+
+        <form *ngIf="!loggedIn()" #loginForm="ngForm" class="login-form" (ngSubmit)="login()">
+
+            <input #username="ngModel" type="text" placeholder="Username" name="username" required
+                [(ngModel)]="model.username" [ngClass]="{'field-error': username.dirty && username.invalid}">
+
+            <input #password="ngModel" type="password" placeholder="Password" name="password" required minlength="6"
+                [(ngModel)]="model.password" [ngClass]="{'field-error':password.dirty && password.invalid}">
+            <button class="loginBtn" [disabled]="!loginForm.valid" type="submit">Log In</button>
+        </form>
+    </div>
 </nav>
+<div class="loginError" *ngIf="authService.errorMsg">{{authService.errorMsg}}</div>

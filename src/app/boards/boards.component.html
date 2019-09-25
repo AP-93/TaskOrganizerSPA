@@ -1,9 +1,8 @@
 <div id="wrapper" *ngIf="boards">
     <h1>Boards</h1>
-    <div id="boardContainer">
-        <div *ngFor='let b of boards'>
-            <div class="board" [routerLink]="['/boards',b.id]">{{b.title}}</div>
-        </div>
+    <div id="boardContainer" cdkDropList (cdkDropListDropped)="drop($event)">
+
+        <div *ngFor='let b of boards' cdkDrag class="board" [routerLink]="['/boards',b.id]">{{b.title}}</div>
 
         <div id="createBoard" class="board"><a (click)="inputHidden = !inputHidden"
                 [hidden]="!inputHidden"><span>+</span>Add Board</a>

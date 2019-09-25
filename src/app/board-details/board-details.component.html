@@ -1,28 +1,77 @@
-<app-board-details-bar *ngIf="boardData" [userIsOwner]="userIsOwner" [boardId]="boardData.id"
-    [boardOwnerId]="boardData.ownerId" [boardTitle]="boardData.title"></app-board-details-bar>
+<app-board-details-bar *ngIf="boardDetails" [userIsOwner]="userIsOwner" [boardId]="boardDetails.id"
+    [boardOwnerId]="boardDetails.ownerId" [boardTitle]="boardDetails.title"></app-board-details-bar>
 
-<div id="boardListContainer" *ngIf="boardData">
-    <div *ngFor='let l of boardData.boardLists ;let i = index'>
+<div class="cardDataContainer" *ngIf="showCardDetails">
+    <app-dialog [(visible)]="showCardDetails">
+        <app-card-details (close)="showCardDetails = false; displayLists() " [cardData]="cardData" [listName]="listName"
+            [boardId]="boardDetails.id"></app-card-details>
+    </app-dialog>
+</div>
+
+<div id="boardListContainer" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)"
+    *ngIf="boardDetails">
+    <div cdkDrag *ngFor='let l of boardDetails.boardLists ;let i = index'>
+        <div class="drop-placeholder" *cdkDragPlaceholder></div>
+        <div class="drag-placeholder" *cdkDragPreview>{{l.listName}}</div>
         <div class="list">
             <div class="lstNameAndBtn">
                 <div id="listName">{{l.listName}}</div>
                 <div class="btnDialogContainer">
-                    <button class="lstOptionBtn" (click)="clickedList = i+1">&bull;&bull;&bull;</button>
+                    <button class="lstOptionBtn"
+                        (click)="clickedList = i+1; moveList.moveToListId=i+1">&bull;&bull;&bull;</button>
                     <app-dialog [(visible)]="clickedList" *ngIf="clickedList===i+1" id="lstActionDialog">
-                        <div class="lstActionText">List Actions</div>
+                        <div>
+                            <div class="lstActionText">List Actions</div>
+                            <hr>
+                            <div class="dialogClickableOption" (click)="toggleForm(i); clickedList=false">Add Card...
+                            </div>
+                            <div class="dialogClickableOption"
+                                (click)="clickedMoveList=i+1;moveList.moveToBoardId = boardDetails.id; clickedList=false">
+                                Move
+                                List...
+                            </div>
+                            <hr>
+                            <div class="dialogClickableOption"
+                                (click)="deleteAllCards(boardDetails.id,l.id);clickedList=false">Delete All Cards in
+                                This
+                                List...</div>
+                            <div class="dialogClickableOption"
+                                (click)="deleteList(boardDetails.id,l.id);clickedList=false">Delete This List...</div>
+                        </div>
+                    </app-dialog>
+
+                    <app-dialog [(visible)]="clickedMoveList" *ngIf="clickedMoveList===i+1">
+
+                        <div class="lstActionText">Move List</div>
                         <hr>
-                        <div class="dialogClickableOption" (click)="toggleForm(i); clickedList=false">Add Card...</div>
-                        <div class="dialogClickableOption"
-                            (click)="deleteAllCards(boardData.id,l.id);clickedList=false">Delete All Cards in This
-                            List...</div>
-                        <div class="dialogClickableOption" (click)="deleteList(boardData.id,l.id);clickedList=false">
-                            Delete This List...</div>
+                        <div (clickOutside)="showBoards=false">
+                            <div class="dialogClickableOption moveLstOptions" (click)="showBoards=!showBoards">
+                                Board:<br>{{moveList.moveToBoardName}}</div>
+                            <div class="dropdown-content " *ngIf="showBoards">
+                                <div *ngFor="let b of boards" (click)="moveToBoard(b); showBoards=false"
+                                    class="dropdownItem">{{b.title}}
+                                    <span *ngIf="b.id === boardDetails.id">(current)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div (clickOutside)="showPositions=false">
+                            <div class="dialogClickableOption moveLstOptions" (click)="showPositions=!showPositions">
+                                Position:<br>{{moveList.moveToListId}}</div>
+                            <div class="dropdown-content " *ngIf="showPositions">
+                                <div *ngFor="let dummy of ' '.repeat(moveList.maxPositions).split(''), let x = index"
+                                    (click)="setListPos(x); showPositions=false" class="dropdownItem">{{x+1}}
+
+                                </div>
+                            </div>
+                        </div>
+                        <button (click)="moveListSend(l.id,x);clickedMoveList=false">Move</button>
                     </app-dialog>
                 </div>
             </div>
             <div id="cardsContainer">
                 <div *ngFor='let c of l.cards' id="card" (click)="openCardDetails(c,l.listName)">
                     {{c.cardText}}
+                    <!--<button class="cardBtn hide">&bull;&bull;&bull;</button>-->
                 </div>
             </div>
             <div id="addCardContainer">
@@ -44,10 +93,4 @@
             <button [disabled]="!boardListForm.valid" type="submit">Add</button>
         </form>
     </div>
-
-</div>
-<div class="cardDataCOntainer" *ngIf="showCardDetails">
-    <app-dialog [(visible)]="showCardDetails">
-        <app-card-details [cardData]="cardData" [listName]="listName"></app-card-details>
-    </app-dialog>
 </div>

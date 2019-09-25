@@ -1,17 +1,57 @@
 .login-form{
-    
     display: grid;
     width: 40vw;
     row-gap: 1vh;
     margin:auto;
 }
-input{
-    height:5vh;
-}
+input {
+    height: 5vh;
+    padding-left: 1vw;
+    border-radius: 5px;
+    outline: none;
+    border: 2px solid #026ba77c;
+  }
+  input::placeholder{
+    color: #026ba770;
+    opacity: 1; 
+  }
+  input:focus {
+    outline: none;
+    box-shadow: 0px 0px 2px rgb(77, 138, 252);
+    border-color: rgb(77, 138, 252);
+  }
+
 button{
-    height:5vh;
+    border-radius: 5px;
+    font-family: Arial;
+    font-size: calc(12px + 0.4vw);
+    padding: 1vh 1vw 1vh 1vw;
+    outline:0;
+    border: 2px solid #03dac6;
+    background-color: #03dac6;
+    box-shadow: 2px 2px 3px #018786;
+    color: #ffffff;
+}button:active{
+    background-color: #019b8b;
+    box-shadow: 0 0 0;
+    border-color: #019b8b;
+}button:disabled{
+    background-color:#c8dddb;
+    box-shadow: 0 0 0;
+    border-color: #c8dddb;
 }
+
 h1{
     padding-top: 8vh;
     text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #026aa7;
+    font-size: 30px;
+}
+.errorField{
+    background-color: rgba(252, 21, 67, 0.753);
+    padding:1vh 1vw;
+    color: rgb(255, 251, 251);
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 5px;
 }
