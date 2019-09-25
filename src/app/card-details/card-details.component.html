@@ -1,19 +1,27 @@
 <div class="cardContainer">
-    <div class="cardHeader">
-        <div>{{cardData.cardText}}</div>
-        <div>in List {{listName}}</div>
+    <div (clickOutside)="openTextForm = false " class="cardHeader">
+        <div [hidden]="openTextForm" (click)="openTextForm=!openTextForm">{{cardData.cardText}}</div>
+
+        <input [hidden]="!openTextForm" type="text" name="cardText" [(ngModel)]="cardData.cardText" id="cardTextInput"
+            (blur)="SaveCardData()">
+
+        <div id="listNameDiv">in List {{listName}}</div>
     </div>
+
     <div class="detailsContainer">
         <div class="descAndActContainer">
             <div class="description" (clickOutside)="openForm = false">
                 <div>Description</div>
+
                 <div *ngIf="cardData.description" (click)="openForm = !openForm" [hidden]="openForm">
-                    {{cardData.description}}aaa</div>
+                    TO DO: add card description
+                </div>
 
                 <div class="cardDescription" *ngIf="!cardData.description" (click)="openForm = !openForm"
                     [hidden]="openForm">Add a more detailed description...</div>
 
-                <form #boardListForm="ngForm" class="cardDescription" (ngSubmit)="createList()" [hidden]="!openForm">
+                <form #boardListForm="ngForm" class="cardDescription" (ngSubmit)="saveDescription()"
+                    [hidden]="!openForm">
                     <input type="text" placeholder="Add a more detailed description..." name="cardDescription"
                         [(ngModel)]="cardData.description" id="cardDescInput">
                     <button [disabled]="!boardListForm.valid" type="submit">Save</button>
@@ -21,8 +29,11 @@
             </div>
             <div class="activity">
                 <div>Activity</div>
+                TO DO: add activity log and comments
             </div>
         </div>
-        <div class="options"></div>
+        <div class="options">
+            <button (click)="DeleteCard()">Delete card</button>
+        </div>
     </div>
 </div>

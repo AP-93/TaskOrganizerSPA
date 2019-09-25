@@ -1,4 +1,4 @@
-export class newBoard {
+export class NewBoard {
     userId: number;
     boardName: string;
 }

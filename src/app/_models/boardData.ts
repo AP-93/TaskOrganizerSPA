@@ -7,6 +7,7 @@ export interface Card {
 
 export interface BoardList {
     id: number;
+    ListPosition: number;
     listName: string;
     cards: Card[];
     boardId: number;

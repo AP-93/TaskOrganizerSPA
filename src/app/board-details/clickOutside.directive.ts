@@ -1,10 +1,10 @@
 import { Directive, ElementRef, Output, EventEmitter, HostListener } from '@angular/core';
-//https://christianliebel.com/2016/05/angular-2-a-simple-click-outside-directive/
+// https://christianliebel.com/2016/05/angular-2-a-simple-click-outside-directive/
 @Directive({
     selector: '[clickOutside]'
 })
 export class ClickOutsideDirective {
-    //elementRef - reference to the DOM element on which the clickOutside directive was placed on
+    // elementRef - reference to the DOM element on which the clickOutside directive was placed on
     constructor(private _elementRef: ElementRef) {
     }
 

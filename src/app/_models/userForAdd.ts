@@ -1,3 +1,3 @@
-export class userForAdd {
-    Username: string
+export class UserForAdd {
+    Username: string;
 }

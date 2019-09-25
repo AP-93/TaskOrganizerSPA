@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
+import { DragDropModule } from "@angular/cdk/drag-drop"
 
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -30,12 +31,13 @@ import { BoardDetailsBarComponent } from './board-details-bar/board-details-bar.
     DialogComponent,
     ClickOutsideDirective,
     CardDetailsComponent,
-    BoardDetailsBarComponent
+    BoardDetailsBarComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    DragDropModule,
     RouterModule.forRoot([
       { path: "home", component: HomeComponent, canActivate: [HomeGuard] },
       { path: "boards", component: BoardsComponent, canActivate: [AuthGuard] },

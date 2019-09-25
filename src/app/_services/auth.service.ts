@@ -7,9 +7,10 @@ import { JwtHelperService } from "@auth0/angular-jwt";
   providedIn: 'root'
 })
 export class AuthService {
-  baseUrl = "https://localhost:44360/api/auth/";
+  baseUrl = "https://taskorganizerapi20190925095822.azurewebsites.net/api/auth/"
+  // baseUrl = "https://localhost:44360/api/auth/";
   jwtHelper = new JwtHelperService();
-
+  errorMsg: string;
   constructor(private http: HttpClient) { }
 
   login(model: any) {
@@ -20,11 +21,11 @@ export class AuthService {
           localStorage.setItem('token', user.token);
         }
       })
-    )
+    );
   }
 
   register(model: any) {
-    return this.http.post(this.baseUrl + "register", model)
+    return this.http.post(this.baseUrl + "register", model);
   }
 
   loggedIn() {
