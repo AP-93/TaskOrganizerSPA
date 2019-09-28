@@ -12,7 +12,7 @@ export class CardDetailsComponent implements OnInit {
   @Input() cardData: Card;
   @Input() listName: string;
   @Input() boardId: number;
-  @Output() close = new EventEmitter();
+  @Output() closeCardDetails = new EventEmitter();
   showCardDescInput: boolean;
 
   constructor(private boardService: BoardDataService) { }
@@ -24,6 +24,6 @@ export class CardDetailsComponent implements OnInit {
     this.boardService.changeCard(this.cardData, this.boardId).subscribe(() => console.log(this.cardData));
   }
   DeleteCard() {
-    this.boardService.deleteCard(this.cardData, this.boardId).subscribe(() => this.close.emit(null));
+    this.boardService.deleteCard(this.cardData, this.boardId).subscribe(() => this.closeCardDetails.emit(null));
   }
 }

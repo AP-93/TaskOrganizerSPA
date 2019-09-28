@@ -19,6 +19,7 @@ export class BoardDetailsBarComponent implements OnInit {
 
   userToAdd: UserForAdd = { Username: "" };
   boardUsers: any;
+  addUserErrMsg: string;
 
   ngOnInit() {
     this.getUsers();
@@ -28,9 +29,17 @@ export class BoardDetailsBarComponent implements OnInit {
     this.boardService.getBoardUsers(this.boardId).subscribe(x => this.boardUsers = x);
   }
   addUserToBoard() {
-    this.boardService.addUserToBoard(this.userToAdd, this.boardId).subscribe(() => this.getUsers());
+    this.boardService.addUserToBoard(this.userToAdd, this.boardId).subscribe(x => { this.getUsers(); this.addUserErrMsg = "Succes" },
+      error => {
+        this.addUserErrMsg = error.error;
+        console.log(error);
+      });
   }
   removeUserFromBoard(userId: number) {
     this.boardService.removeUserFromBoard(this.boardId, userId).subscribe(() => this.getUsers());
+  }
+  resetValues() {
+    this.addUserErrMsg = "";
+    this.userToAdd.Username = "";
   }
 }

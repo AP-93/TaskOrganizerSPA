@@ -8,13 +8,15 @@ import { Board, Card } from '../_models/boardData';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { MoveList } from '../_models/moveList';
+import { MoveCard } from '../_models/moveCard';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BoardDataService {
-  baseUrl = "https://taskorganizerapi20190925095822.azurewebsites.net/api/values/"
-  // baseUrl = "https://localhost:44360/api/values/";
+   baseUrl = "https://taskorganizerapi20190925095822.azurewebsites.net/api/values/"
+
+ // baseUrl = "https://localhost:44360/api/values/";
   jwtHelper = new JwtHelperService();
   token = "Bearer " + localStorage.getItem("token");
   boardData: Board[];
@@ -59,6 +61,10 @@ export class BoardDataService {
     moveList.userId = this.getId();
     return this.http.put(this.baseUrl + "moveList", moveList, this.httpOptions);
   }
+  moveCard(moveCard: MoveCard) {
+    return this.http.put(this.baseUrl + "MoveCard", moveCard, this.httpOptions);
+  }
+
 
   deleteCard(card: Card, boardId: number) {
     return this.http.delete(this.baseUrl + "deleteCard/" + boardId + "/" + card.boardListId + "/" + card.id, this.httpOptions);

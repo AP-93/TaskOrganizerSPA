@@ -1,10 +1,17 @@
 .boardBar{
     display: grid;
-    grid-template-columns: min-content min-content auto;
+    grid-template-columns: min-content min-content min-content auto;
     padding: 1vh 1vw;
 }
 h1{
+    width:fit-content;
+    max-width: 25vw;
+    
     margin:0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+   
 }
 .btnDialogContainer{
    position: relative;
@@ -95,3 +102,62 @@ h1{
     background-color: rgba(0, 0, 0, 0);
     z-index: 999;
   }
+#backButton{
+    border:1px;
+    margin-left:auto;
+     outline: none;
+     width: 50px;
+     height: 30px;
+     padding: 5px;
+     background-color:#026aa7;
+     color:#FFF;
+     text-align:center;
+     box-shadow:  1px 0 0 0 #012a42;
+     border-radius: 5px;
+}
+#backButton:active{
+    background-color:#005180;
+    box-shadow:   0 0 0;
+}
+.inviteUserForm>input{
+    display: block;
+    padding: 10px;
+    margin-bottom: 4px;
+    width: 270px;
+    border-radius: 5px;
+    outline: 0;
+    border:1px solid #026ba77c;
+}
+.inviteUserForm > button{
+    border:1px;
+
+    outline: none;
+   
+    height: 30px;
+    padding: 5px;
+    background-color:#03dac6;
+    color:#FFF;
+    text-align:center;
+    box-shadow: 2px 1px 1px 0 #018786;
+    border-radius: 5px;
+} .inviteUserForm > button:disabled{
+    background-color:#03dac57a;
+    box-shadow: 0 0 0;
+}.inviteUserForm > button:active{
+    background-color:#02a090;
+    box-shadow: 0 0 0;
+}
+.errorMsg{
+    padding: 10px;
+    margin-left: 10px;
+    color: rgba(0, 0, 0, 0.308);
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.dialogText{
+    font-family: Arial, Helvetica, sans-serif;
+    
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.473);
+    padding-bottom: 4px;
+}

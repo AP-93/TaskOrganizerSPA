@@ -1,18 +1,22 @@
 <app-board-details-bar *ngIf="boardDetails" [userIsOwner]="userIsOwner" [boardId]="boardDetails.id"
-    [boardOwnerId]="boardDetails.ownerId" [boardTitle]="boardDetails.title"></app-board-details-bar>
+    [boardOwnerId]="boardDetails.ownerId" [boardTitle]="boardDetails.title">
+</app-board-details-bar>
 
 <div class="cardDataContainer" *ngIf="showCardDetails">
     <app-dialog [(visible)]="showCardDetails">
-        <app-card-details (close)="showCardDetails = false; displayLists() " [cardData]="cardData" [listName]="listName"
-            [boardId]="boardDetails.id"></app-card-details>
+        <app-card-details (closeCardDetails)="showCardDetails = false; displayLists() " [cardData]="cardData"
+            [listName]="listName" [boardId]="boardDetails.id"></app-card-details>
     </app-dialog>
 </div>
 
+
 <div id="boardListContainer" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)"
     *ngIf="boardDetails">
-    <div cdkDrag *ngFor='let l of boardDetails.boardLists ;let i = index'>
+
+    <div cdkDrag [cdkDragData]="l" *ngFor='let l of boardDetails.boardLists ;let i = index'>
         <div class="drop-placeholder" *cdkDragPlaceholder></div>
         <div class="drag-placeholder" *cdkDragPreview>{{l.listName}}</div>
+
         <div class="list">
             <div class="lstNameAndBtn">
                 <div id="listName">{{l.listName}}</div>
@@ -23,12 +27,12 @@
                         <div>
                             <div class="lstActionText">List Actions</div>
                             <hr>
-                            <div class="dialogClickableOption" (click)="toggleForm(i); clickedList=false">Add Card...
+                            <div class="dialogClickableOption" (click)="toggleForm(i); clickedList=false">Add
+                                Card...
                             </div>
                             <div class="dialogClickableOption"
                                 (click)="clickedMoveList=i+1;moveList.moveToBoardId = boardDetails.id; clickedList=false">
-                                Move
-                                List...
+                                Move List...
                             </div>
                             <hr>
                             <div class="dialogClickableOption"
@@ -36,7 +40,8 @@
                                 This
                                 List...</div>
                             <div class="dialogClickableOption"
-                                (click)="deleteList(boardDetails.id,l.id);clickedList=false">Delete This List...</div>
+                                (click)="deleteList(boardDetails.id,l.id);clickedList=false">Delete This List...
+                            </div>
                         </div>
                     </app-dialog>
 
@@ -68,29 +73,41 @@
                     </app-dialog>
                 </div>
             </div>
-            <div id="cardsContainer">
-                <div *ngFor='let c of l.cards' id="card" (click)="openCardDetails(c,l.listName)">
+            <div class="cardsContainer" cdkDropList [cdkDropListData]="l.cards" id="{{l.id}}"
+                [cdkDropListConnectedTo]="dropListArray" (cdkDropListDropped)="dropCard($event,i)">
+
+                <div cdkDrag [cdkDragData]="c" *ngFor='let c of l.cards' id="card"
+                    (click)="openCardDetails(c,l.listName)">
+                    <div class="drop-placeholder-card" *cdkDragPlaceholder></div>
+                    <div class="drag-placeholder-card" *cdkDragPreview>{{c.cardText}}</div>
                     {{c.cardText}}
-                    <!--<button class="cardBtn hide">&bull;&bull;&bull;</button>-->
+                    <!--<button class="cardBtn hide">&bull;&bull;&bull;</button>cdkDropList " -->
                 </div>
+
             </div>
+
             <div id="addCardContainer">
                 <a (click)="toggleForm(i)" *ngIf="showAddacardText || i!= formId" id="addCardBtn"><span>+</span>Add
                     card</a>
-                <form #newCardForm="ngForm" (ngSubmit)="createCard(l.id)" [hidden]="i != formId">
-                    <input class="newCardForm" type="text" placeholder="Card name" name="CardName" required autofocus
-                        [(ngModel)]="newCard.cardName">
+                <form class="newCardForm" #newCardForm="ngForm" (ngSubmit)="createCard(l.id)" [hidden]="i != formId">
+                    <input type="text" placeholder="Card name" name="CardName" required autofocus
+                        [(ngModel)]="newCard.cardName" autocomplete="off">
                     <button [disabled]="!newCardForm.valid" type="submit">Add</button>
                 </form>
             </div>
         </div>
+
     </div>
 
     <div class="list" id="addAnotherList" (clickOutside)="addListInput=false">
-        <a (click)="addListInput = !addListInput" [hidden]="addListInput" class="addListBtn"><span>+</span>Add list</a>
-        <form [hidden]="!addListInput" #boardListForm="ngForm" class="addListForm" (ngSubmit)="createList()">
+        <a (click)="addListInput = !addListInput; scroll()" [hidden]="addListInput"
+            class=" addListBtn"><span>+</span>Add
+            list</a>
+        <form [hidden]="!addListInput" #boardListForm="ngForm" class="addListForm newCardForm"
+            (ngSubmit)="createList();addListInput=false">
             <input type="text" placeholder="List name" name="boardListName" required [(ngModel)]="newList.ListName">
             <button [disabled]="!boardListForm.valid" type="submit">Add</button>
         </form>
     </div>
+
 </div>

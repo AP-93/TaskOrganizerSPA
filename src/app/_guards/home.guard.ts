@@ -13,9 +13,7 @@ export class HomeGuard implements CanActivate {
     if (!this.authService.loggedIn()) {
       return true;
     }
-
     this.router.navigate(["/boards"]);
     return false;
   }
-
 }

@@ -7,8 +7,8 @@ import { JwtHelperService } from "@auth0/angular-jwt";
   providedIn: 'root'
 })
 export class AuthService {
-  baseUrl = "https://taskorganizerapi20190925095822.azurewebsites.net/api/auth/"
-  // baseUrl = "https://localhost:44360/api/auth/";
+   baseUrl = "https://taskorganizerapi20190925095822.azurewebsites.net/api/auth/"
+ // baseUrl = "https://localhost:44360/api/auth/";
   jwtHelper = new JwtHelperService();
   errorMsg: string;
   constructor(private http: HttpClient) { }

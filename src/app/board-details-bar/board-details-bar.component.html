@@ -15,7 +15,7 @@
                 <div class="boardMember">{{boardUsers[id]?.username.charAt(0).toUpperCase()}}</div>
                 <div class="dialogHeader">{{boardUsers[id]?.username}} </div>
             </div>
-            <div class="dialogClickableOption">View Activity</div>
+            <div class="dialogClickableOption">View Activity(not implemented)</div>
             <div class="dialogClickableOption" *ngIf="boardUsers[id]?.id != boardOwnerId && userIsOwner"
                 (click)="removeUserFromBoard(boardUsers[id].id); clicekId=null">Remove User</div>
         </app-dialog>
@@ -32,14 +32,16 @@
     </div>
 
     <div class="btnDialogContainer">
-        <button (click)="showDialog = !showDialog" class="inviteUsrBtn">Invite</button>
+        <button (click)="showDialog = !showDialog; resetValues()" class="inviteUsrBtn">Invite</button>
         <app-dialog [(visible)]="showDialog">
-            <div>Invite User</div>
-            <form #inviteUserForm="ngForm" (ngSubmit)="addUserToBoard()">
+            <div class="dialogText">Invite User</div>
+            <form #inviteUserForm="ngForm" class="inviteUserForm" (ngSubmit)="addUserToBoard()">
                 <input name="userToAddInput" type="text" placeholder="enter username" required
                     [(ngModel)]="userToAdd.Username">
-                <button [disabled]="inviteUserForm.invalid" type="submit">Send Invitation</button>
+                <button [disabled]="inviteUserForm.invalid" type="submit">Send Invitation</button><span
+                    *ngIf="addUserErrMsg" class="errorMsg">{{addUserErrMsg}}</span>
             </form>
         </app-dialog>
     </div>
+    <button id="backButton" [routerLink]="['/boards']">Back</button>
 </div>

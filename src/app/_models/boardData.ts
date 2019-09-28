@@ -3,6 +3,7 @@ export interface Card {
     cardText: string;
     boardListId: number;
     description?: string;
+    cardPosition: number;
 }
 
 export interface BoardList {

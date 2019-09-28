@@ -6,7 +6,8 @@ import { NewCard } from '../_models/newCard';
 import { UserForAdd } from '../_models/userForAdd';
 import { Board, Card, BoardList } from '../_models/boardData';
 import { MoveList } from '../_models/moveList';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { MoveCard } from '../_models/moveCard';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class BoardDetailsComponent implements OnInit {
 
   formId: number = null;
   listName: string;
+  dropListArray: any;
   showAddacardText: boolean = true;
   showCardDetails: boolean = false;
   boardUsers: any;
@@ -30,10 +32,12 @@ export class BoardDetailsComponent implements OnInit {
   userToAdd: UserForAdd = { Username: "" };
   newList: NewList = { boardId: 0, ListName: "" };
   moveList: MoveList = { currentBoardId: 0, currentListId: 0, moveToBoardId: 0, moveToListId: 0, moveToBoardName: "", maxPositions: 1 };
+  moveCard: MoveCard = { currentBoardId: 0, currentListId: 0, cardId: 0, moveToListId: 0, moveToPosition: 0 };
   newCard: NewCard = { boardId: 0, listId: 0, cardName: "" };
 
   ngOnInit() {
-    this.moveList.currentBoardId = this.newCard.boardId = this.newList.boardId = +this.route.snapshot.paramMap.get('id');
+    this.moveCard.currentBoardId = this.moveList.currentBoardId = this.newCard.boardId = this.newList.boardId
+      = +this.route.snapshot.paramMap.get('id');
     this.displayLists();
   }
 
@@ -41,12 +45,16 @@ export class BoardDetailsComponent implements OnInit {
     this.boardService.getBoards().subscribe(x => {
       this.boardService.boardData = this.boards = x;
       this.boardDetails = this.boardService.boardData.find(i => i.id === this.newCard.boardId);
+      this.SortCards();
       this.userIsOwner = (this.boardDetails.ownerId === this.boardService.getId());
       this.moveList.moveToBoardName = this.boardDetails.title;
       this.moveList.maxPositions = this.boardDetails.boardLists.length;
+      this.addDropList(this.boardDetails.boardLists);
     });
   }
-
+  SortCards() {
+    this.boardDetails.boardLists.forEach(x => x.cards.sort((a, b) => (a.cardPosition > b.cardPosition) ? 1 : -1));
+  }
   createList() {
     this.boardService.createList(this.newList).subscribe(() => this.displayLists());
     this.newList.ListName = "";
@@ -80,6 +88,9 @@ export class BoardDetailsComponent implements OnInit {
     this.moveList.currentListId = id;
     this.boardService.moveList(this.moveList).subscribe(() => this.displayLists());
   }
+  moveCardSend() {
+    this.boardService.moveList(this.moveList).subscribe(() => this.displayLists());
+  }
 
   openCardDetails(c: Card, ln: string) {
     this.cardData = c;
@@ -99,5 +110,31 @@ export class BoardDetailsComponent implements OnInit {
     this.moveList.moveToListId = event.currentIndex + 1;
     this.moveList.moveToBoardId = this.moveList.currentBoardId;
     this.boardService.moveList(this.moveList).subscribe();
+  }
+  dropCard(event: CdkDragDrop<Card[]>, index: number) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(this.boardDetails.boardLists[index].cards, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+    }
+    this.moveCard.currentListId = +event.previousContainer.id;
+    this.moveCard.cardId = event.container.data[event.currentIndex].id;
+    this.moveCard.moveToListId = +event.container.id;
+    this.moveCard.moveToPosition = event.currentIndex + 1;
+    this.boardService.moveCard(this.moveCard).subscribe();
+  }
+  addDropList(bl: BoardList[]) {
+
+    this.dropListArray = new Array<string>();
+    for (let i = 0; i < bl.length; i++) {
+      this.dropListArray.push(bl[i].id.toString());
+    }
+  }
+  scroll() {
+    const el = document.getElementById("boardListContainer");
+    el.scrollBy(300, 0);
   }
 }
